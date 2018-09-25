@@ -10,7 +10,7 @@ RUN groupadd -g ${GROUP_ID} litecoin \
 
 RUN apt-get update && \
   apt-get install -y build-essential \
-  libtool autotools-dev automake \
+  libtool autotools-dev automake curl \
   pkg-config libssl-dev libevent-dev \
   bsdmainutils libboost-system-dev \
   libboost-filesystem-dev libboost-chrono-dev \
