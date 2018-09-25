@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -ex
+
+# Generate litecoind.conf
+echo "Installation Complete!"
+
+if [ $# -gt 0 ]; then
+    args=("$@")
+fi
+
+exec litecoind "${args[@]}"
