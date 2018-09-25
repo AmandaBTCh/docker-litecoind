@@ -9,14 +9,14 @@ RUN groupadd -g ${GROUP_ID} litecoin \
   && useradd -u ${USER_ID} -g litecoin -s /bin/bash -m -d /litecoin litecoin
 
 RUN apt-get update && \
-  apt-get install build-essential \
+  apt-get install -y build-essential \
   libtool autotools-dev automake \
   pkg-config libssl-dev libevent-dev \
   bsdmainutils libboost-all-dev \
   software-properties-common && \
   add-apt-repository ppa:bitcoin/bitcoin && \
   apt-get update && \
-  apt-get install libdb4.8-dev libdb4.8++-dev
+  apt-get install -y libdb4.8-dev libdb4.8++-dev
 
 RUN  curl -sL https://github.com/litecoin-project/litecoin/archive/v$VERSION.tar.gz | tar xz && mv /litecoin-$VERSION /litecoin
 
