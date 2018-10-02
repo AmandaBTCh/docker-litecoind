@@ -10,17 +10,7 @@ RUN groupadd -g ${GROUP_ID} litecoin \
   && apt-get update -y \
   && apt-get install -y curl vim gnupg \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && set -ex \
-  && for key in \
-  B42F6819007F00F88E364FD4036A9C25BF357DD4 \
-  FE3348877809386C \
-  ; do \
-  gpg --keyserver pgp.mit.edu --recv-keys "$key" || \
-  gpg --keyserver keyserver.pgp.com --recv-keys "$key" || \
-  gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key" || \
-  gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" ; \
-  done
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV GOSU_VERSION 1.10
 RUN set -x \
@@ -30,7 +20,8 @@ RUN set -x \
   && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
   && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
   && export GNUPGHOME="$(mktemp -d)" \
-  && gpg --verify /usr/local/bin/gosu.asc \
+  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+  && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
   && rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
   && chmod +x /usr/local/bin/gosu \
   && gosu nobody true \
