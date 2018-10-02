@@ -8,9 +8,7 @@ ENV GROUP_ID 1000
 RUN groupadd -g ${GROUP_ID} litecoin \
   && useradd -u ${USER_ID} -g litecoin -s /bin/bash -m -d /litecoin litecoin \
   && apt-get update -y \
-  && apt-get install -y curl vim gnupg \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && apt-get install -y curl gnupg
 
 ENV GOSU_VERSION 1.10
 RUN set -x \
