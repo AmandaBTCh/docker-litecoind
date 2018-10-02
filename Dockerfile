@@ -10,9 +10,9 @@ RUN groupadd -g ${GROUP_ID} litecoin \
   && apt-get update -y \
   && apt-get install -y curl wget vim gnupg \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-  ENV GOSU_VERSION 1.7
+ENV GOSU_VERSION 1.7
 RUN set -x \
   && apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
