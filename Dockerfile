@@ -41,6 +41,10 @@ RUN strip src/litecoind src/litecoin-cli
 
 FROM ubuntu:xenial 
 
+ENV HOME /litecoin
+ENV USER_ID 1000
+ENV GROUP_ID 1000
+
 RUN groupadd -g ${GROUP_ID} litecoin \
   && useradd -u ${USER_ID} -g litecoin -s /bin/bash -m -d /litecoin litecoin
 
