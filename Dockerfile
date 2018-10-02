@@ -22,7 +22,7 @@ RUN apt-get update && \
   apt-get install -y libdb4.8-dev libdb4.8++-dev && \
   apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN  curl -sL https://github.com/litecoin-project/litecoin/archive/v${VERSION}.tar.gz | tar xz && mv /litecoin-${VERSION} /litecoin
+RUN  curl -sL https://github.com/litecoin-project/litecoin/archive/v${VERSION}.tar.gz | tar xz && mv /litecoin-${VERSION}/* /litecoin && rm -rf /litecoin-${VERSION}
 
 WORKDIR /litecoin
 
