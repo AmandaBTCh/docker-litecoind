@@ -15,10 +15,10 @@ nano /home/$USER/.ltcdocker/litecoin.conf
 Run the docker image
 ```
 docker run -v litecoind-data:/litecoin --name=litecoind-node -d \
-      -p 8333:8333 \
-      -p 8332:8332 \
+      -p 9333:9333 \
+      -p 9332:9332 \
       -v /home/$USER/.ltcdocker/litecoin.conf:/litecoin/.litecoin/litecoin.conf \
-      unibtc/docker-litecoind
+      bitsler/docker-litecoind:latest
 ```
 
 Check Logs

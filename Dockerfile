@@ -22,7 +22,7 @@ RUN apt-get update && \
   apt-get install -y libdb4.8-dev libdb4.8++-dev && \
   apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN  curl -sL https://github.com/litecoin-project/litecoin/archive/v$VERSION.tar.gz | tar xz && mv /litecoin-$VERSION /litecoin
+RUN  curl -sL https://github.com/litecoin-project/litecoin/archive/v${VERSION}.tar.gz | tar xz && mv /litecoin-${VERSION} /litecoin
 
 WORKDIR /litecoin
 
@@ -40,6 +40,9 @@ RUN make -j$(nproc)
 RUN strip src/litecoind src/litecoin-cli
 
 FROM ubuntu:xenial 
+
+RUN groupadd -g ${GROUP_ID} litecoin \
+  && useradd -u ${USER_ID} -g litecoin -s /bin/bash -m -d /litecoin litecoin
 
 COPY --from=builder /litecoin/src/litecoind /litecoin/src/litecoin-cli /usr/local/bin/
 
@@ -62,7 +65,7 @@ RUN set -x \
   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD ./bin /usr/local/bin
-RUN chmod +x /usr/local/bin/btc_oneshot
+RUN chmod +x /usr/local/bin/ltc_oneshot
 RUN chmod +x /usr/local/bin/litecoind
 RUN chmod +x /usr/local/bin/litecoin-cli
 
