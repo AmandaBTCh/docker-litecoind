@@ -53,6 +53,7 @@ COPY --from=builder /litecoin/src/litecoind /litecoin/src/litecoin-cli /usr/loca
 ENV GOSU_VERSION 1.7
 RUN set -x \
   && apt-get update && apt-get install -y --no-install-recommends \
+  libboost-system-dev \
   ca-certificates \
   wget \
   && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
