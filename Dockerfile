@@ -7,6 +7,7 @@ ENV GROUP_ID 1000
 
 RUN groupadd -g ${GROUP_ID} litecoin \
   && useradd -u ${USER_ID} -g litecoin -s /bin/bash -m -d /litecoin litecoin \
+  && set -x \
   && apt-get update -y \
   && apt-get install -y curl gosu
 
