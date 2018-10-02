@@ -13,7 +13,7 @@ RUN groupadd -g ${GROUP_ID} litecoin \
 
 ENV LITECOIN_VERSION=0.16.3
 
-RUN curl -sL https://download.litecoin.org/litecoin-${LITECOIN_VERSION}/linux/litecoin-${LITECOIN_VERSION}-x86_64-linux-gnu.tar.gz \
+RUN curl -O https://download.litecoin.org/litecoin-${LITECOIN_VERSION}/linux/litecoin-${LITECOIN_VERSION}-x86_64-linux-gnu.tar.gz \
   && tar --strip=2 -xzf *.tar.gz -C /usr/local/bin \
   && rm *.tar.gz
 
