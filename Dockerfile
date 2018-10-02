@@ -8,7 +8,7 @@ ENV GROUP_ID 1000
 RUN groupadd -g ${GROUP_ID} litecoin \
   && useradd -u ${USER_ID} -g litecoin -s /bin/bash -m -d /litecoin litecoin \
   && apt-get update -y \
-  && apt-get install -y curl vim gnupg \
+  && apt-get install -y curl wget gnupg \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && set -ex \
@@ -23,11 +23,21 @@ RUN groupadd -g ${GROUP_ID} litecoin \
   done
 
 ENV GOSU_VERSION 1.7
-RUN curl -o /usr/local/bin/gosu -fSL https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture) \
-  && curl -o /usr/local/bin/gosu.asc -fSL https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture).asc \
-  && gpg --verify /usr/local/bin/gosu.asc \
-  && rm /usr/local/bin/gosu.asc \
-  && chmod +x /usr/local/bin/gosu
+RUN set -x \
+  && apt-get update && apt-get install -y --no-install-recommends \
+  ca-certificates \
+  wget \
+  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
+  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
+  && export GNUPGHOME="$(mktemp -d)" \
+  && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+  && rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
+  && chmod +x /usr/local/bin/gosu \
+  && gosu nobody true \
+  && apt-get purge -y \
+  ca-certificates \
+  wget \
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV LITECOIN_VERSION=0.16.3
 
