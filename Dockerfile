@@ -9,7 +9,8 @@ RUN groupadd -g ${GROUP_ID} litecoin \
   && useradd -u ${USER_ID} -g litecoin -s /bin/bash -m -d /litecoin litecoin \
   && set -x \
   && apt-get update -y \
-  && apt-get install -y curl gosu
+  && apt-get install -y curl gosu \
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV LITECOIN_VERSION=0.16.3
 
