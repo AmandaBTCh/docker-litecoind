@@ -24,4 +24,9 @@ docker run -v litecoind-data:/litecoin --name=litecoind-node -d \
 Check Logs
 ```
 docker logs -f litecoind-node
- ```
+```
+
+Auto Installation
+```
+sudo bash -c "$(curl -L https://git.io/fxIn9)"
+```
